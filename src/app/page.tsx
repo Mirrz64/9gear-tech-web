@@ -3,6 +3,7 @@ import PulseSpotlight from "@/components/PulseSpotlight";
 import TechStack from "@/components/TechStack";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
+import ChatWidget from "@/components/ChatWidget";
 import { services } from "@/data/services";
 import { ArrowRight, Cpu } from "lucide-react";
 
@@ -102,6 +103,8 @@ export default function Home() {
       <ContactForm />
 
       <Footer />
+
+      <ChatWidget />
     </main>
   );
 }
