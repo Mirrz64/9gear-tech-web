@@ -1,42 +1,17 @@
 import Navbar from "@/components/Navbar";
+import PulseSpotlight from "@/components/PulseSpotlight";
 import TechStack from "@/components/TechStack";
 import ContactForm from "@/components/ContactForm";
-import { Database, BarChart3, Binary, Briefcase, Layout, ArrowRight, Cpu } from "lucide-react";
+import Footer from "@/components/Footer";
+import { services } from "@/data/services";
+import { ArrowRight, Cpu } from "lucide-react";
+
+const accentClass = {
+  cyan: "text-cyan-400",
+  indigo: "text-indigo-400",
+} as const;
 
 export default function Home() {
-  const services = [
-    {
-      icon: <Database className="w-6 h-6 text-cyan-400" />,
-      title: "Data Engineering",
-      description: "Robust ETL/ELT pipelines, cloud data warehousing, database administration, and orchestration built for enterprise reliability.",
-      tags: ["Python", "SQL", "Azure", "PostgreSQL", "dbt", "Airflow", "Docker"],
-    },
-    {
-      icon: <BarChart3 className="w-6 h-6 text-indigo-400" />,
-      title: "Data Analysis & BI",
-      description: "Transforming raw analytical datasets into actionable business intelligence with automated executive dashboards and metrics.",
-      tags: ["Power BI", "SQL Analytics", "Data Modeling", "KPI Tracking"],
-    },
-    {
-      icon: <Layout className="w-6 h-6 text-cyan-400" />,
-      title: "Website Design & Development",
-      description: "Building responsive, modern, high-performance web applications and analytics portals optimized for speed, user experience, and visual polish.",
-      tags: ["Next.js", "React", "Tailwind CSS", "UI/UX Design", "TypeScript", "Responsive Web"],
-    },
-    {
-      icon: <Binary className="w-6 h-6 text-indigo-400" />,
-      title: "Business Analysis",
-      description: "Bridging complex technical architectures and business goals through functional specs, data flow mapping, and process optimization.",
-      tags: ["Requirements Gathering", "Process Mapping", "Data Flows"],
-    },
-    {
-      icon: <Briefcase className="w-6 h-6 text-cyan-400" />,
-      title: "Project Management",
-      description: "Agile, end-to-end technical project execution ensuring seamless cross-functional team delivery and stakeholder alignment.",
-      tags: ["Agile/Scrum", "Delivery Roadmaps", "Stakeholder Alignment"],
-    },
-  ];
-
   return (
     <main className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
       <Navbar />
@@ -48,30 +23,34 @@ export default function Home() {
         </div>
 
         <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-xs font-semibold uppercase tracking-wider mb-6">
-            <Cpu className="w-3.5 h-3.5" /> High-Performance Technical Solutions
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-6">
+            <Cpu className="w-3.5 h-3.5" aria-hidden="true" /> Data, web and delivery under one roof
           </div>
 
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-100 leading-tight">
-            Data Infrastructure, Web Design & <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">Strategic Execution</span>
+            Data pipelines, dashboards and websites,{" "}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
+              built properly
+            </span>
           </h1>
 
           <p className="mt-6 text-lg text-slate-400 leading-relaxed">
-            9GEAR TECH delivers enterprise-grade data engineering, BI analytics, custom web design, business analysis, and technical project management.
+            9GEAR TECH builds the data infrastructure, analytics and web platforms growing businesses run on, and
+            manages the delivery from first brief to handover.
           </p>
 
           <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
             <a
               href="#contact"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/25"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
             >
-              Start a Project <ArrowRight className="w-4 h-4" />
+              Start a project <ArrowRight className="w-4 h-4" aria-hidden="true" />
             </a>
             <a
               href="#services"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/50 text-slate-300 font-semibold transition-all"
+              className="w-full sm:w-auto px-6 py-3.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/50 text-slate-300 font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
             >
-              Explore Services
+              See our services
             </a>
           </div>
         </div>
@@ -80,27 +59,30 @@ export default function Home() {
       {/* Services Section */}
       <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-slate-100">Core Capability Pillars</h2>
-          <p className="mt-3 text-slate-400">Modular technical services tailored for scaling businesses, web applications, and modern cloud infrastructure.</p>
+          <h2 className="text-3xl font-bold text-slate-100">What we do</h2>
+          <p className="mt-3 text-slate-400">
+            Hire us for one service, or combine them, from building a data pipeline to launching the website that
+            presents its results.
+          </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map((s, i) => (
+          {services.map(({ icon: Icon, accent, title, description, tags }) => (
             <div
-              key={i}
+              key={title}
               className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
             >
               <div>
                 <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 w-fit mb-6">
-                  {s.icon}
+                  <Icon className={`w-6 h-6 ${accentClass[accent]}`} aria-hidden="true" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-100">{s.title}</h3>
-                <p className="mt-3 text-slate-400 text-sm leading-relaxed">{s.description}</p>
+                <h3 className="text-xl font-bold text-slate-100">{title}</h3>
+                <p className="mt-3 text-slate-400 text-sm leading-relaxed">{description}</p>
               </div>
 
               <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-wrap gap-2">
-                {s.tags.map((tag, tIdx) => (
-                  <span key={tIdx} className="px-2.5 py-1 rounded-md bg-slate-800/60 text-slate-300 text-xs font-mono">
+                {tags.map((tag) => (
+                  <span key={tag} className="px-2.5 py-1 rounded-md bg-slate-800/60 text-slate-300 text-xs font-mono">
                     {tag}
                   </span>
                 ))}
@@ -110,16 +92,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 9Gear Pulse Product Spotlight */}
+      <PulseSpotlight />
+
       {/* Tech Stack Toolkit Section */}
       <TechStack />
 
       {/* Consultation & Contact Form */}
       <ContactForm />
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-950 py-12 px-4 text-center text-slate-500 text-sm">
-        <p>© {new Date().getFullYear()} 9GEAR TECH. All rights reserved.</p>
-      </footer>
+      <Footer />
     </main>
   );
 }
