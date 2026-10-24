@@ -1,30 +1,35 @@
+import Image from "next/image";
+
 const links = [
   { label: "Services", href: "#services" },
   { label: "9Gear Pulse", href: "#pulse" },
+  { label: "Tools", href: "#tools" },
   { label: "Contact", href: "#contact" },
 ];
+
+const focusRing = "focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-peach";
 
 export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-slate-800 bg-slate-950 px-4 sm:px-6 lg:px-8 py-12">
-      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
+    <footer className="bg-ink px-6 sm:px-8 py-16 text-cream">
+      <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-start md:justify-between">
         <div className="max-w-sm">
-          <p className="text-lg font-bold text-slate-100">9GEAR TECH</p>
-          <p className="mt-2 text-sm text-slate-400 leading-relaxed">
+          <div className="flex items-center gap-3">
+            <Image src="/9gear-mark.png" alt="" width={44} height={44} className="rounded-xl bg-cream p-1" />
+            <p className="font-display text-xl font-extrabold">9GEAR TECH</p>
+          </div>
+          <p className="mt-4 leading-relaxed text-sand">
             Data engineering, analytics, web development and technical delivery for growing businesses.
           </p>
         </div>
 
         <nav aria-label="Footer">
-          <ul className="flex flex-wrap gap-x-8 gap-y-3 text-sm">
+          <ul className="flex flex-wrap gap-x-8 gap-y-3">
             {links.map((link) => (
               <li key={link.href}>
-                <a
-                  href={link.href}
-                  className="text-slate-400 hover:text-slate-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 rounded"
-                >
+                <a href={link.href} className={`rounded text-sand transition-colors hover:text-cream ${focusRing}`}>
                   {link.label}
                 </a>
               </li>
@@ -34,7 +39,7 @@ export default function Footer() {
                 href="https://9gearpulse.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-slate-400 hover:text-slate-100 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400 rounded"
+                className={`rounded text-sand transition-colors hover:text-cream ${focusRing}`}
               >
                 9gearpulse.com
               </a>
@@ -43,9 +48,9 @@ export default function Footer() {
         </nav>
       </div>
 
-      <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-slate-800/60 text-sm text-slate-500">
-        <p>© {year} 9GEAR TECH. All rights reserved.</p>
-      </div>
+      <p className="mx-auto mt-12 max-w-7xl border-t border-umber pt-6 text-sm text-sand">
+        © {year} 9GEAR TECH. All rights reserved.
+      </p>
     </footer>
   );
 }

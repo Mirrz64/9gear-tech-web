@@ -109,22 +109,22 @@ export default function ChatWidget() {
           id="chat-panel"
           role="dialog"
           aria-label="Chat with 9GEAR TECH"
-          className="mb-4 flex flex-col w-[calc(100vw-2rem)] sm:w-96 h-[min(32rem,calc(100dvh-7rem))] rounded-2xl border border-slate-800 bg-slate-950 shadow-2xl shadow-black/50 overflow-hidden"
+          className="mb-4 flex flex-col w-[calc(100vw-2rem)] sm:w-96 h-[min(32rem,calc(100dvh-7rem))] rounded-3xl border-2 border-ink bg-cream shadow-[6px_6px_0_0_#16130f] overflow-hidden"
         >
           {/* Header */}
-          <div className="flex items-center justify-between gap-3 px-4 py-3 border-b border-slate-800 bg-slate-900/60">
+          <div className="flex items-center justify-between gap-3 px-4 py-3 border-b-2 border-ink bg-royal text-white">
             <div className="flex items-center gap-2.5">
-              <Image src="/9gear-mark.png" alt="" width={32} height={32} />
+              <Image src="/9gear-mark.png" alt="" width={36} height={36} className="rounded-lg bg-cream p-0.5" />
               <div>
-                <p className="text-sm font-semibold text-slate-100">9GEAR TECH assistant</p>
-                <p className="text-xs text-slate-400">Answers about our services and products</p>
+                <p className="font-display text-base font-bold">9GEAR TECH assistant</p>
+                <p className="text-xs text-sky">Answers about our services and products</p>
               </div>
             </div>
             <button
               type="button"
               onClick={() => setIsOpen(false)}
               aria-label="Close chat"
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-100 hover:bg-slate-800 focus-visible:outline-2 focus-visible:outline-cyan-400"
+              className="p-1.5 rounded-lg text-white hover:bg-royal-dark focus-visible:outline-2 focus-visible:outline-white"
             >
               <X className="w-5 h-5" />
             </button>
@@ -137,11 +137,11 @@ export default function ChatWidget() {
                 <div
                   className={
                     m.role === "user"
-                      ? "max-w-[85%] rounded-2xl rounded-br-sm bg-cyan-500 text-slate-950 px-3.5 py-2.5 text-sm whitespace-pre-wrap"
-                      : "max-w-[85%] rounded-2xl rounded-bl-sm bg-slate-900 border border-slate-800 text-slate-200 px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap"
+                      ? "max-w-[85%] rounded-2xl rounded-br-sm bg-royal text-white px-3.5 py-2.5 text-sm whitespace-pre-wrap"
+                      : "max-w-[85%] rounded-2xl rounded-bl-sm bg-white border border-ink/15 text-ink px-3.5 py-2.5 text-sm leading-relaxed whitespace-pre-wrap"
                   }
                 >
-                  {m.content || <span className="text-slate-500">Typing…</span>}
+                  {m.content || <span className="text-ink-soft">Typing…</span>}
                 </div>
               </div>
             ))}
@@ -153,7 +153,7 @@ export default function ChatWidget() {
                     key={s}
                     type="button"
                     onClick={() => send(s)}
-                    className="px-3 py-1.5 rounded-full border border-slate-700 text-xs text-slate-300 hover:border-cyan-500/60 hover:text-cyan-300 transition-colors focus-visible:outline-2 focus-visible:outline-cyan-400"
+                    className="px-3 py-1.5 rounded-full border-2 border-ink text-xs font-semibold text-ink hover:bg-tangerine transition-colors focus-visible:outline-2 focus-visible:outline-royal"
                   >
                     {s}
                   </button>
@@ -162,14 +162,14 @@ export default function ChatWidget() {
             )}
 
             {error && (
-              <p role="alert" className="text-sm text-rose-300 bg-rose-500/10 border border-rose-500/30 rounded-lg px-3 py-2">
+              <p role="alert" className="text-sm text-[#8a1c1c] bg-[#ffe3df] border border-[#d9534f]/40 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
           </div>
 
           {/* Input */}
-          <div className="border-t border-slate-800 p-3">
+          <div className="border-t-2 border-ink p-3">
             <div className="flex items-end gap-2">
               <label htmlFor="chat-input" className="sr-only">
                 Type your message
@@ -183,19 +183,19 @@ export default function ChatWidget() {
                 onChange={(e) => setInput(e.target.value)}
                 onKeyDown={onKeyDown}
                 placeholder="Ask a question…"
-                className="flex-1 resize-none max-h-28 rounded-xl bg-slate-900 border border-slate-800 px-3 py-2.5 text-sm text-slate-100 placeholder:text-slate-500 focus:outline-none focus:border-cyan-500/60"
+                className="flex-1 resize-none max-h-28 rounded-xl bg-white border-2 border-ink/20 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft focus:outline-none focus:border-royal"
               />
               <button
                 type="button"
                 onClick={() => send(input)}
                 disabled={isSending || !input.trim()}
                 aria-label="Send message"
-                className="p-2.5 rounded-xl bg-cyan-500 text-slate-950 hover:bg-cyan-400 disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+                className="p-2.5 rounded-xl bg-royal text-white hover:bg-royal-dark disabled:opacity-40 disabled:cursor-not-allowed transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-royal"
               >
                 <Send className="w-4 h-4" />
               </button>
             </div>
-            <p className="mt-2 text-[11px] text-slate-500">
+            <p className="mt-2 text-[11px] text-ink-soft">
               AI assistant. It can make mistakes, so confirm important details through the contact form.
             </p>
           </div>
@@ -209,7 +209,7 @@ export default function ChatWidget() {
           aria-label={isOpen ? "Close chat" : "Open chat"}
           aria-expanded={isOpen}
           aria-controls="chat-panel"
-          className="w-14 h-14 rounded-full bg-cyan-500 hover:bg-cyan-400 text-slate-950 flex items-center justify-center shadow-lg shadow-cyan-500/30 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+          className="w-14 h-14 rounded-full bg-tangerine hover:bg-peach text-ink border-2 border-ink flex items-center justify-center shadow-[4px_4px_0_0_#16130f] transition-colors focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-royal"
         >
           {isOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
         </button>

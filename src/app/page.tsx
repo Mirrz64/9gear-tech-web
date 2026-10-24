@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import PulseSpotlight from "@/components/PulseSpotlight";
 import TechStack from "@/components/TechStack";
@@ -5,101 +6,93 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 import ChatWidget from "@/components/ChatWidget";
 import { services } from "@/data/services";
-import { ArrowRight, Cpu } from "lucide-react";
+import { bricolage, instrument } from "@/lib/fonts";
 
-const accentClass = {
-  cyan: "text-cyan-400",
-  indigo: "text-indigo-400",
-} as const;
+const focusRing =
+  "focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-royal";
 
 export default function Home() {
   return (
-    <main className="min-h-screen bg-slate-950 text-slate-100 selection:bg-cyan-500 selection:text-slate-950">
+    <main
+      className={`${bricolage.variable} ${instrument.variable} font-sans min-h-screen bg-cream text-ink selection:bg-tangerine selection:text-ink`}
+    >
       <Navbar />
 
-      {/* Hero Section */}
-      <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="absolute inset-0 -z-10 flex items-center justify-center">
-          <div className="w-[600px] h-[300px] bg-gradient-to-r from-cyan-500/10 to-indigo-500/10 blur-[120px] rounded-full" />
-        </div>
-
-        <div className="text-center max-w-3xl mx-auto">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-cyan-500/30 bg-cyan-500/10 text-cyan-400 text-sm font-medium mb-6">
-            <Cpu className="w-3.5 h-3.5" aria-hidden="true" /> Data, web and delivery under one roof
-          </div>
-
-          <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-slate-100 leading-tight">
-            Data pipelines, dashboards and websites,{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-indigo-400">
-              built properly
-            </span>
+      {/* Hero */}
+      <section id="top" className="mx-auto max-w-7xl px-6 sm:px-8 pt-36 pb-24 md:pt-44 flex flex-wrap items-end gap-12">
+        <div className="min-w-0 flex-[999_1_38rem]">
+          <p className="mb-6 font-semibold text-tangerine-text">Data engineering, analytics and web development</p>
+          <h1 className="font-display font-extrabold tracking-[-0.035em] leading-[0.95] text-[clamp(3rem,7vw,6.5rem)]">
+            We build the systems your business{" "}
+            <span className="whitespace-nowrap rounded-xl bg-tangerine px-3 box-decoration-clone">runs on.</span>
           </h1>
-
-          <p className="mt-6 text-lg text-slate-400 leading-relaxed">
-            9GEAR TECH builds the data infrastructure, analytics and web platforms growing businesses run on, and
-            manages the delivery from first brief to handover.
+          <p className="mt-8 max-w-xl text-xl leading-relaxed text-ink-soft">
+            Pipelines that move your data, dashboards that explain it and websites that bring in customers, delivered
+            from first brief to handover.
           </p>
-
-          <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="mt-10 flex flex-wrap gap-4">
             <a
               href="#contact"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+              className={`rounded-full bg-royal px-7 py-4 text-lg font-semibold text-white transition-colors hover:bg-royal-dark ${focusRing}`}
             >
-              Start a project <ArrowRight className="w-4 h-4" aria-hidden="true" />
+              Start a project
             </a>
             <a
               href="#services"
-              className="w-full sm:w-auto px-6 py-3.5 rounded-lg border border-slate-800 hover:border-slate-700 bg-slate-900/50 text-slate-300 font-semibold transition-all focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-cyan-400"
+              className={`rounded-full border-2 border-ink px-7 py-4 text-lg font-semibold transition-colors hover:bg-ink hover:text-cream ${focusRing}`}
             >
-              See our services
+              See what we do
             </a>
+          </div>
+        </div>
+
+        <div className="min-w-0 flex-[1_1_18rem] rounded-[2rem] bg-royal p-8 text-white flex flex-col gap-5">
+          <Image
+            src="/9gear-mark.png"
+            alt=""
+            width={120}
+            height={120}
+            className="rounded-3xl bg-cream p-3"
+          />
+          <p className="font-display text-3xl font-bold leading-tight">
+            Six services. One team. One point of contact.
+          </p>
+          <p className="leading-relaxed text-sky">
+            Hire us for one piece of work, or combine them into a single project.
+          </p>
+        </div>
+      </section>
+
+      {/* Services */}
+      <section id="services" className="bg-ink text-cream px-6 sm:px-8 py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+            <h2 className="font-display font-extrabold tracking-[-0.03em] leading-none text-[clamp(2.25rem,5vw,4rem)]">
+              What we do
+            </h2>
+            <p className="max-w-md text-lg leading-relaxed text-sand">
+              From the pipeline behind the numbers to the website that presents them.
+            </p>
+          </div>
+
+          <div className="grid gap-0.5 overflow-hidden rounded-3xl bg-umber md:grid-cols-2 lg:grid-cols-3">
+            {services.map((s, i) => (
+              <article key={s.title} className="bg-ink p-9 flex flex-col gap-3.5">
+                <span className="font-display text-xl font-extrabold text-peach">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display text-[1.75rem] font-bold leading-tight">{s.title}</h3>
+                <p className="leading-relaxed text-sand">{s.description}</p>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Services Section */}
-      <section id="services" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/60">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <h2 className="text-3xl font-bold text-slate-100">What we do</h2>
-          <p className="mt-3 text-slate-400">
-            Hire us for one service, or combine them, from building a data pipeline to launching the website that
-            presents its results.
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {services.map(({ icon: Icon, accent, title, description, tags }) => (
-            <div
-              key={title}
-              className="p-8 rounded-2xl bg-slate-900/40 border border-slate-800 hover:border-slate-700 transition-all duration-300 flex flex-col justify-between"
-            >
-              <div>
-                <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 w-fit mb-6">
-                  <Icon className={`w-6 h-6 ${accentClass[accent]}`} aria-hidden="true" />
-                </div>
-                <h3 className="text-xl font-bold text-slate-100">{title}</h3>
-                <p className="mt-3 text-slate-400 text-sm leading-relaxed">{description}</p>
-              </div>
-
-              <div className="mt-6 pt-6 border-t border-slate-800/80 flex flex-wrap gap-2">
-                {tags.map((tag) => (
-                  <span key={tag} className="px-2.5 py-1 rounded-md bg-slate-800/60 text-slate-300 text-xs font-mono">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* 9Gear Pulse Product Spotlight */}
       <PulseSpotlight />
 
-      {/* Tech Stack Toolkit Section */}
       <TechStack />
 
-      {/* Consultation & Contact Form */}
       <ContactForm />
 
       <Footer />
