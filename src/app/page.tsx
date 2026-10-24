@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Navbar from "@/components/Navbar";
 import PulseSpotlight from "@/components/PulseSpotlight";
+import AtelierSpotlight from "@/components/AtelierSpotlight";
 import TechStack from "@/components/TechStack";
 import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
@@ -89,7 +90,21 @@ export default function Home() {
         </div>
       </section>
 
-      <PulseSpotlight />
+      {/* Products */}
+      <section id="products" className="mx-auto max-w-7xl px-6 sm:px-8 py-24">
+        <div className="mb-14 flex flex-wrap items-end justify-between gap-6">
+          <h2 className="font-display font-extrabold tracking-[-0.03em] leading-none text-[clamp(2.25rem,5vw,4rem)]">
+            Our products
+          </h2>
+          <p className="max-w-md text-lg leading-relaxed text-ink-soft">
+            Software we build and run ourselves, shaped by the same work we do for clients.
+          </p>
+        </div>
+        <div className="flex flex-col gap-8">
+          <PulseSpotlight />
+          <AtelierSpotlight />
+        </div>
+      </section>
 
       <TechStack />
 

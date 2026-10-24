@@ -8,10 +8,10 @@ type Message = { role: "user" | "assistant"; content: string };
 
 const GREETING: Message = {
   role: "assistant",
-  content: "Hi! I can answer questions about 9GEAR TECH's services and our product, 9Gear Pulse. What are you working on?",
+  content: "Hi! I can answer questions about 9GEAR TECH's services and our products, 9Gear Pulse and 9Gear Atelier. What are you working on?",
 };
 
-const SUGGESTIONS = ["What services do you offer?", "Tell me about 9Gear Pulse", "How do I start a project?"];
+const SUGGESTIONS = ["What services do you offer?", "Tell me about your products", "How do I start a project?"];
 
 export default function ChatWidget() {
   const [isOpen, setIsOpen] = useState(false);

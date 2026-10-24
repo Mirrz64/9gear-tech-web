@@ -21,46 +21,44 @@ const focusRing = "focus-visible:outline-3 focus-visible:outline-offset-3 focus-
 
 export default function PulseSpotlight() {
   return (
-    <section id="pulse" className="mx-auto max-w-7xl px-6 sm:px-8 py-24">
-      <div className="rounded-[2rem] bg-tangerine p-8 sm:p-14 text-ink">
-        <div className="flex flex-wrap items-center gap-10">
-          <div className="min-w-0 flex-[999_1_30rem]">
-            <p className="mb-3 font-semibold">Our product, in early access</p>
-            <h2 className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.5rem,5vw,4.5rem)]">
-              9Gear Pulse
-            </h2>
-            <p className="mt-5 max-w-xl text-lg leading-relaxed">
-              Describe the data you have and what you need from it. Pulse designs, writes and runs the ETL pipeline,
-              and you approve each step.
-            </p>
-          </div>
-          <div className="flex flex-[1_1_17rem] flex-col gap-3">
-            <a
-              href="https://9gearpulse.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`rounded-full bg-ink px-7 py-4 text-center text-lg font-semibold text-cream transition-colors hover:bg-royal ${focusRing}`}
-            >
-              Visit 9gearpulse.com
-            </a>
-            <a
-              href="#contact"
-              className={`rounded-full border-2 border-ink px-7 py-4 text-center text-lg font-semibold transition-colors hover:bg-ink hover:text-cream ${focusRing}`}
-            >
-              Request early access
-            </a>
-          </div>
+    <div id="pulse" className="scroll-mt-24 rounded-[2rem] bg-tangerine p-8 sm:p-14 text-ink">
+      <div className="flex flex-wrap items-center gap-10">
+        <div className="min-w-0 flex-[999_1_30rem]">
+          <p className="mb-3 font-semibold">For data teams, in early access</p>
+          <h3 className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.5rem,5vw,4.5rem)]">
+            9Gear Pulse
+          </h3>
+          <p className="mt-5 max-w-xl text-lg leading-relaxed">
+            Describe the data you have and what you need from it. Pulse designs, writes and runs the ETL pipeline, and
+            you approve each step.
+          </p>
         </div>
-
-        <ul className="mt-12 grid gap-4 sm:grid-cols-2">
-          {features.map((f) => (
-            <li key={f.title} className="rounded-2xl bg-cream p-6">
-              <h3 className="font-display text-xl font-bold">{f.title}</h3>
-              <p className="mt-2 leading-relaxed text-ink-soft">{f.description}</p>
-            </li>
-          ))}
-        </ul>
+        <div className="flex flex-[1_1_17rem] flex-col gap-3">
+          <a
+            href="https://9gearpulse.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={`rounded-full bg-ink px-7 py-4 text-center text-lg font-semibold text-cream transition-colors hover:bg-royal ${focusRing}`}
+          >
+            Visit 9gearpulse.com
+          </a>
+          <a
+            href="#contact"
+            className={`rounded-full border-2 border-ink px-7 py-4 text-center text-lg font-semibold transition-colors hover:bg-ink hover:text-cream ${focusRing}`}
+          >
+            Request early access
+          </a>
+        </div>
       </div>
-    </section>
+
+      <ul className="mt-12 grid gap-4 sm:grid-cols-2">
+        {features.map((f) => (
+          <li key={f.title} className="rounded-2xl bg-cream p-6">
+            <h4 className="font-display text-xl font-bold">{f.title}</h4>
+            <p className="mt-2 leading-relaxed text-ink-soft">{f.description}</p>
+          </li>
+        ))}
+      </ul>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import Image from "next/image";
 const links = [
   { label: "Services", href: "#services" },
   { label: "9Gear Pulse", href: "#pulse" },
+  { label: "9Gear Atelier", href: "#atelier" },
   { label: "Tools", href: "#tools" },
   { label: "Contact", href: "#contact" },
 ];

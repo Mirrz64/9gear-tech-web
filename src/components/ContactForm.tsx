@@ -1,34 +1,60 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Send, CheckCircle2, AlertCircle } from "lucide-react";
 
-export default function ContactForm() {
-    const [formData, setFormData] = useState({
-        name: "",
-        email: "",
-        service: "Data Engineering",
-        message: "",
-    });
-    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+const FORMSPREE_URL = "https://formspree.io/f/xvzelabq";
 
-    const handleSubmit = async (e: React.FormEvent) => {
+const topics = [
+    "Data Engineering",
+    "Data Analysis & BI",
+    "Website Design & Development",
+    "Business Analysis",
+    "Project Management",
+    "Remote Office Setup",
+    "9Gear Pulse early access",
+    "9Gear Atelier waitlist",
+    "Something else",
+];
+
+const emptyForm = { name: "", email: "", service: topics[0], message: "" };
+
+const fieldClass =
+    "w-full rounded-xl border-2 border-ink/20 bg-white px-4 py-3.5 text-ink placeholder:text-ink-soft/70 transition-colors focus:border-royal focus:outline-none";
+const labelClass = "mb-2 block font-semibold";
+const focusRing = "focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-royal";
+
+export default function ContactForm() {
+    const [formData, setFormData] = useState(emptyForm);
+    const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+    const successRef = useRef<HTMLHeadingElement>(null);
+
+    // Move focus to the confirmation so keyboard and screen reader users know it worked.
+    useEffect(() => {
+        if (status === "success") successRef.current?.focus();
+    }, [status]);
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setStatus("submitting");
 
+        // Formspree's honeypot: bots fill hidden fields, people don't.
+        const gotcha = new FormData(e.currentTarget).get("_gotcha");
+
         try {
-            const response = await fetch("https://formspree.io/f/xvzelabq", {
+            const response = await fetch(FORMSPREE_URL, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Accept": "application/json"
-                },
-                body: JSON.stringify(formData),
+                headers: { "Content-Type": "application/json", Accept: "application/json" },
+                body: JSON.stringify({
+                    ...formData,
+                    _subject: `New enquiry: ${formData.service}`,
+                    _gotcha: gotcha ?? "",
+                }),
             });
 
             if (response.ok) {
                 setStatus("success");
-                setFormData({ name: "", email: "", service: "Data Engineering", message: "" });
+                setFormData(emptyForm);
             } else {
                 setStatus("error");
             }
@@ -38,116 +64,151 @@ export default function ContactForm() {
     };
 
     return (
-        <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto border-t border-slate-800/60">
-            <div className="text-center mb-12">
-                <h2 className="text-3xl font-bold text-slate-100">Let's Build Together</h2>
-                <p className="mt-3 text-slate-400">
-                    Have a project in mind or need tailored engineering and web services? Drop a message below to schedule a technical consultation.
-                </p>
-            </div>
+        <section id="contact" className="mx-auto max-w-7xl px-6 sm:px-8 pb-24">
+            <div className="flex flex-wrap gap-12">
+                <div className="min-w-0 flex-[1_1_20rem]">
+                    <h2 className="font-display font-extrabold tracking-[-0.03em] leading-[0.95] text-[clamp(2.5rem,5vw,4.5rem)]">
+                        Have a project in mind?
+                    </h2>
+                    <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
+                        Tell us what you're working on, what you have now and when you need it. We'll reply within 24
+                        hours to arrange a consultation.
+                    </p>
+                    <p className="mt-6 max-w-md leading-relaxed text-ink-soft">
+                        Interested in 9Gear Pulse or 9Gear Atelier? Choose it from the list and we'll be in touch about
+                        access.
+                    </p>
+                </div>
 
-            <div className="p-8 sm:p-10 rounded-2xl bg-slate-900/50 border border-slate-800 shadow-xl backdrop-blur-sm">
-                {status === "success" ? (
-                    <div className="text-center py-12 space-y-4">
-                        <div className="w-12 h-12 bg-cyan-500/10 text-cyan-400 rounded-full flex items-center justify-center mx-auto border border-cyan-500/30">
-                            <CheckCircle2 className="w-6 h-6" />
-                        </div>
-                        <h3 className="text-2xl font-bold text-slate-100">Message Received!</h3>
-                        <p className="text-slate-400 max-w-md mx-auto text-sm">
-                            Thank you for reaching out to 9GEAR TECH. We'll review your project requirements and respond within 24 hours.
-                        </p>
-                        <button
-                            onClick={() => setStatus("idle")}
-                            className="mt-4 px-6 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold transition-all"
-                        >
-                            Send Another Message
-                        </button>
-                    </div>
-                ) : (
-                    <form onSubmit={handleSubmit} className="space-y-6">
-                        {status === "error" && (
-                            <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 text-red-400 text-sm flex items-center gap-3">
-                                <AlertCircle className="w-5 h-5 flex-shrink-0" />
-                                <span>Something went wrong submitting your request. Please try again.</span>
+                <div className="min-w-0 flex-[999_1_32rem] rounded-[2rem] border-2 border-ink bg-cream p-7 sm:p-10 shadow-[8px_8px_0_0_#16130f]">
+                    {status === "success" ? (
+                        <div className="py-10 text-center" role="status">
+                            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-tangerine">
+                                <CheckCircle2 className="h-7 w-7 text-ink" aria-hidden="true" />
                             </div>
-                        )}
-
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">
-                                    Full Name
-                                </label>
-                                <input
-                                    type="text"
-                                    required
-                                    placeholder="e.g. Alex Morgan"
-                                    value={formData.name}
-                                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-sm"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">
-                                    Email Address
-                                </label>
-                                <input
-                                    type="email"
-                                    required
-                                    placeholder="alex@company.com"
-                                    value={formData.email}
-                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                                    className="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-sm"
-                                />
-                            </div>
-                        </div>
-
-                        <div>
-                            <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">
-                                Primary Service Required
-                            </label>
-                            <select
-                                value={formData.service}
-                                onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                                className="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 focus:outline-none focus:border-cyan-500 transition-colors text-sm"
+                            <h3
+                                ref={successRef}
+                                tabIndex={-1}
+                                className="mt-6 font-display text-3xl font-bold focus:outline-none"
                             >
-                                <option value="Data Engineering">Data Engineering & Pipelines</option>
-                                <option value="Data Analysis & BI">Data Analysis & BI Dashboards</option>
-                                <option value="Website Design & Development">Website Design & Development</option>
-                                <option value="Business Analysis">Business Analysis & Process Mapping</option>
-                                <option value="Project Management">Technical Project Management</option>
-                            </select>
+                                Message sent
+                            </h3>
+                            <p className="mx-auto mt-3 max-w-md leading-relaxed text-ink-soft">
+                                Thanks for getting in touch with 9GEAR TECH. We'll read your message and reply within 24
+                                hours.
+                            </p>
+                            <button
+                                type="button"
+                                onClick={() => setStatus("idle")}
+                                className={`mt-8 rounded-full border-2 border-ink px-6 py-3 font-semibold transition-colors hover:bg-ink hover:text-cream ${focusRing}`}
+                            >
+                                Send another message
+                            </button>
                         </div>
-
-                        <div>
-                            <label className="block text-xs font-mono text-slate-300 uppercase tracking-wider mb-2">
-                                Project Overview & Objectives
-                            </label>
-                            <textarea
-                                required
-                                rows={4}
-                                placeholder="Briefly describe your goals, current setup, and target timeline..."
-                                value={formData.message}
-                                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                                className="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-cyan-500 transition-colors text-sm resize-none"
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={status === "submitting"}
-                            className="w-full py-3.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-semibold flex items-center justify-center gap-2 transition-all shadow-lg shadow-cyan-500/20 disabled:opacity-50"
-                        >
-                            {status === "submitting" ? (
-                                "Sending Details..."
-                            ) : (
-                                <>
-                                    Submit Request <Send className="w-4 h-4" />
-                                </>
+                    ) : (
+                        <form onSubmit={handleSubmit} className="space-y-6">
+                            {status === "error" && (
+                                <div
+                                    role="alert"
+                                    className="flex items-start gap-3 rounded-xl border-2 border-[#c0392b] bg-[#ffe3df] p-4 text-[#7a1a12]"
+                                >
+                                    <AlertCircle className="mt-0.5 h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                                    <span>
+                                        Your message didn't send. Check your connection and try again. Your details are
+                                        still filled in.
+                                    </span>
+                                </div>
                             )}
-                        </button>
-                    </form>
-                )}
+
+                            {/* Honeypot: hidden from people, left empty */}
+                            <div className="hidden" aria-hidden="true">
+                                <label htmlFor="contact-gotcha">Leave this empty</label>
+                                <input id="contact-gotcha" type="text" name="_gotcha" tabIndex={-1} autoComplete="off" />
+                            </div>
+
+                            <div className="grid gap-6 sm:grid-cols-2">
+                                <div>
+                                    <label htmlFor="contact-name" className={labelClass}>
+                                        Your name
+                                    </label>
+                                    <input
+                                        id="contact-name"
+                                        type="text"
+                                        required
+                                        autoComplete="name"
+                                        placeholder="e.g. Alex Morgan"
+                                        value={formData.name}
+                                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                                        className={fieldClass}
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor="contact-email" className={labelClass}>
+                                        Email
+                                    </label>
+                                    <input
+                                        id="contact-email"
+                                        type="email"
+                                        required
+                                        autoComplete="email"
+                                        placeholder="alex@company.com"
+                                        value={formData.email}
+                                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                        className={fieldClass}
+                                    />
+                                </div>
+                            </div>
+
+                            <div>
+                                <label htmlFor="contact-service" className={labelClass}>
+                                    What can we help with?
+                                </label>
+                                <select
+                                    id="contact-service"
+                                    value={formData.service}
+                                    onChange={(e) => setFormData({ ...formData, service: e.target.value })}
+                                    className={fieldClass}
+                                >
+                                    {topics.map((t) => (
+                                        <option key={t} value={t}>
+                                            {t}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            <div>
+                                <label htmlFor="contact-message" className={labelClass}>
+                                    About your project
+                                </label>
+                                <textarea
+                                    id="contact-message"
+                                    required
+                                    rows={5}
+                                    placeholder="Your goals, what you have in place now, and when you'd like it done"
+                                    value={formData.message}
+                                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                                    className={`${fieldClass} resize-y`}
+                                />
+                            </div>
+
+                            <button
+                                type="submit"
+                                disabled={status === "submitting"}
+                                className={`flex w-full items-center justify-center gap-2 rounded-full bg-royal py-4 text-lg font-semibold text-white transition-colors hover:bg-royal-dark disabled:cursor-not-allowed disabled:opacity-60 ${focusRing}`}
+                            >
+                                {status === "submitting" ? (
+                                    "Sending…"
+                                ) : (
+                                    <>
+                                        Send message <Send className="h-4 w-4" aria-hidden="true" />
+                                    </>
+                                )}
+                            </button>
+                        </form>
+                    )}
+                </div>
             </div>
         </section>
     );
